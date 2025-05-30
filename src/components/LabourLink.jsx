@@ -2,7 +2,7 @@ import React from 'react'
 
 function LabourLink() {
   return (
-    <div className='bg-[#F2F2F2] min-h-screen overflow-hidden'>
+    <div className='bg-[#F2F2F2] min-h-screen overflow-hidden mt-12'>
       {/* Hero Section */}
       <div className='relative w-full flex flex-col lg:flex-row justify-center items-center px-6 pt-12 lg:pt-20 gap-12'>
         {/* Background Elements */}
@@ -66,7 +66,7 @@ function LabourLink() {
         <div className="w-full lg:w-[50vw] flex flex-col items-center lg:items-start justify-center order-1 lg:order-2 text-center lg:text-left">
           <div className='transform hover:translate-x-2 transition-transform duration-300'>
             <h1 className='text-4xl sm:text-5xl lg:text-6xl font-black mb-6 text-[#000000] relative'>
-              About Us
+              About Website
               <div className='absolute -bottom-2 left-0 w-1/3 h-1 bg-[#B6B09F] rounded-full'></div>
             </h1>
             <div className='bg-[#EAE4D5] p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-prose'>
@@ -103,19 +103,23 @@ function LabourLink() {
               <div className='grid grid-cols-2 gap-4'>
                 <div className='bg-[#B6B09F] p-4 rounded-xl'>
                   <h3 className='font-bold text-[#F2F2F2] text-sm mb-1'>ASP.NET Core</h3>
-                  <p className='text-[#F2F2F2] text-xs opacity-90'>backend logic and APIs</p>
+                  <p className='text-[#F2F2F2] text-xs opacity-90'>Backend logic and APIs</p>
                 </div>
                 <div className='bg-[#EAE4D5] p-4 rounded-xl'>
-                  <h3 className='font-bold text-[#000000] text-sm mb-1'>Real-time Chat</h3>
-                  <p className='text-[#000000] text-xs opacity-70'>Instant communication</p>
+                  <h3 className='font-bold text-[#000000] text-sm mb-1'>Microservices</h3>
+                  <p className='text-[#000000] text-xs opacity-70'>Modular, scalable architecture</p>
                 </div>
                 <div className='bg-[#EAE4D5] p-4 rounded-xl'>
-                  <h3 className='font-bold text-[#000000] text-sm mb-1'>Secure Payments</h3>
-                  <p className='text-[#000000] text-xs opacity-70'>Protected transactions</p>
+                  <h3 className='font-bold text-[#000000] text-sm mb-1'>RabbitMQ </h3>
+                  <p className='text-[#000000] text-xs opacity-70'>For real-time messaging and decoupled services</p>
                 </div>
                 <div className='bg-[#B6B09F] p-4 rounded-xl'>
-                  <h3 className='font-bold text-[#F2F2F2] text-sm mb-1'>Analytics</h3>
-                  <p className='text-[#F2F2F2] text-xs opacity-90'>Performance insights</p>
+                  <h3 className='font-bold text-[#F2F2F2] text-sm mb-1'>Docker </h3>
+                  <p className='text-[#F2F2F2] text-xs opacity-90'> Containerized deployment</p>
+                </div>
+                   <div className='bg-[#B6B09F] p-4 rounded-xl'>
+                  <h3 className='font-bold text-[#F2F2F2] text-sm mb-1'>Azure</h3>
+                  <p className='text-[#F2F2F2] text-xs opacity-90'>Secure, cloud-native infrastructure</p>
                 </div>
               </div>
             </div>

@@ -6,7 +6,7 @@ import DotNetDeveloper from './DotNetDeveloper'
 import Nexfin from '../components/Nexfin'
 import Profession from './Profession'
 import LabourLink from '../components/LabourLink'
-import Experience from '../components/Experince'
+import Experience from '../components/Bridgeon'
 import Navbar from '../components/NavBar'
 
 export default function Display() {

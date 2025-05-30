@@ -6,7 +6,7 @@ function Projects() {
   return (
     <div>
         <Navbar/>
-        <LabourLink/>
+        <LabourLink />
         <Nexfin/>
     </div>
   )

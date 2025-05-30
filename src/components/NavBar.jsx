@@ -11,19 +11,19 @@ const navigate=useNavigate()
   return (
     <>
       {/* Navbar */}
-    <nav className="bg-white/80 backdrop-blur-md shadow-lg fixed top-0 left-0 right-0 z-50">
+    <nav className="bg-white/20 backdrop-blur-md shadow-lg fixed top-0 left-0 right-0 z-50 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-gray-800">Brand</h1>
+              <h1 className="text-xl font-bold text-gray-800">MUHAMMED SHAHID</h1>
             </div>
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+            <a onClick={()=>navigate("/")} className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
               Home
             </a>
             <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
@@ -32,12 +32,10 @@ const navigate=useNavigate()
             <a onClick={()=>navigate("/projects")}  className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
               Projects
             </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
-              Contact
+            <a onClick={()=>navigate("/experiences")} className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+              Experience
             </a>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
-              Get Started
-            </button>
+         
           </div>
 
           {/* Mobile menu button */}
@@ -64,12 +62,10 @@ const navigate=useNavigate()
               <a onClick={()=>navigate("/projects")} className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium transition-colors">
                 Projects
               </a>
-              <a href="#" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium transition-colors">
-                Contact
+              <a onClick={()=>navigate("/experiences")}  className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium transition-colors">
+                Experience
               </a>
-              <button className="w-full text-left bg-blue-600 text-white px-3 py-2 text-base font-medium hover:bg-blue-700 transition-colors rounded-md mt-2">
-                Get Started
-              </button>
+            
             </div>
           </div>
         )}

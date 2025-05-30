@@ -82,9 +82,9 @@ function Nexfin() {
             {/* Project Image */}
             <div className='relative group overflow-hidden rounded-3xl'>
               <img 
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" 
+                src="assets/Nx01.jpg" 
                 alt="NexFin Dashboard" 
-                className='w-full h-80 lg:h-[28rem] object-cover transition-transform duration-700 group-hover:scale-105' 
+                className='w-full h-80 lg:h-[28rem] object-fill transition-transform duration-700 group-hover:scale-105' 
               />
               <div className='absolute inset-0 bg-gradient-to-t from-[#000000]/40 to-transparent'></div>
             </div>
@@ -257,9 +257,9 @@ function Nexfin() {
 
             <div className='relative group overflow-hidden rounded-3xl'>
               <img 
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop" 
+                src="assets/Nx02.jpg" 
                 alt="Technical Architecture" 
-                className='w-full h-80 lg:h-[28rem] object-cover transition-transform duration-700 group-hover:scale-105' 
+                className='w-full h-80 lg:h-[28rem] object-fill transition-transform duration-700 group-hover:scale-105' 
               />
               <div className='absolute inset-0 bg-gradient-to-t from-[#000000]/30 to-transparent'></div>
             </div>
@@ -318,7 +318,7 @@ function Nexfin() {
                 icon: <FaEye className="text-white text-2xl" />
               },
               { 
-                src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop", 
+                src: "https://img.freepik.com/free-photo/woman-selecting-pictures-people_1134-466.jpg?uid=R63140263&ga=GA1.1.383706833.1743323696&semt=ais_items_boosted&w=740", 
                 title: "Multi-user Access", 
                 desc: "Role-based permissions and security",
                 icon: <FaUsersCog className="text-white text-2xl" />
@@ -342,9 +342,9 @@ function Nexfin() {
             ))}
           </div>
 
-          {/* Stats Section */}
-          <div className='grid md:grid-cols-4 gap-6 mb-20 relative'>
-            {/* Background pattern */}
+        
+          {/* <div className='grid md:grid-cols-4 gap-6 mb-20 relative'>
+        
             <div className='absolute top-1/2 left-0 w-8 h-8 bg-[#EAE4D5] rounded-full opacity-30 transform -translate-x-4'></div>
             <div className='absolute top-1/2 right-0 w-6 h-6 bg-[#B6B09F] transform rotate-45 opacity-25 translate-x-3'></div>
             
@@ -355,7 +355,7 @@ function Nexfin() {
               { number: "24/7", label: "System Availability" }
             ].map((stat, index) => (
               <div key={index} className='text-center p-6 bg-[#EAE4D5] rounded-2xl border border-[#B6B09F]/20 hover:bg-[#B6B09F]/10 transition-all duration-300 relative overflow-hidden'>
-                {/* Card background design */}
+             
                 <div className='absolute -top-4 -right-4 w-16 h-16 bg-[#B6B09F] rounded-full opacity-5'></div>
                 <div className='absolute -bottom-2 -left-2 w-12 h-12 bg-[#B6B09F] transform rotate-45 opacity-5'></div>
                 
@@ -363,7 +363,7 @@ function Nexfin() {
                 <div className='text-[#000000]/70 font-medium relative z-10'>{stat.label}</div>
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* Call to Action */}
           <div className='text-center mt-20 p-12 bg-gradient-to-br from-[#EAE4D5] to-[#B6B09F]/50 rounded-3xl border border-[#B6B09F]/30 relative overflow-hidden'>

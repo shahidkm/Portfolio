@@ -348,34 +348,37 @@ function Home() {
             </div>
 
             {/* Enhanced Social Links */}
-            <div className="flex gap-10 justify-center lg:justify-start pt-8">
-              {[
-                { name: 'GitHub', hoverColor: '#000000' },
-                { name: 'LinkedIn', hoverColor: '#B6B09F' },
-                { name: 'Email', hoverColor: '#000000' }
-              ].map((social) => (
-                <a 
-                  key={social.name}
-                  href="#" 
-                  className="group relative text-base font-medium tracking-wide transition-all duration-300 hover:-translate-y-2"
-                  style={{ color: 'rgba(0, 0, 0, 0.6)' }}
-                  onMouseEnter={(e) => {
-                    e.target.style.color = social.hoverColor;
-                    e.target.style.textShadow = `0 4px 12px ${social.hoverColor}30`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.color = 'rgba(0, 0, 0, 0.6)';
-                    e.target.style.textShadow = 'none';
-                  }}
-                >
-                  {social.name}
-                  <span 
-                    className="absolute -bottom-2 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-500 rounded-full"
-                    style={{ backgroundColor: social.hoverColor }}
-                  ></span>
-                </a>
-              ))}
-            </div>
+           <div className="flex gap-10 justify-center lg:justify-start pt-8">
+  {[
+    { name: 'GitHub', hoverColor: '#000000', link: 'https://github.com/shahidkm' },
+    { name: 'LinkedIn', hoverColor: '#B6B09F', link: 'www.linkedin.com/in/muhammed-shahid-km' },
+    { name: 'Email', hoverColor: '#000000', link: 'kmshahid432@gmail.com' }
+  ].map((social) => (
+    <a 
+      key={social.name}
+      href={social.link} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="group relative text-base font-medium tracking-wide transition-all duration-300 hover:-translate-y-2"
+      style={{ color: 'rgba(0, 0, 0, 0.6)' }}
+      onMouseEnter={(e) => {
+        e.target.style.color = social.hoverColor;
+        e.target.style.textShadow = `0 4px 12px ${social.hoverColor}30`;
+      }}
+      onMouseLeave={(e) => {
+        e.target.style.color = 'rgba(0, 0, 0, 0.6)';
+        e.target.style.textShadow = 'none';
+      }}
+    >
+      {social.name}
+      <span 
+        className="absolute -bottom-2 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-500 rounded-full"
+        style={{ backgroundColor: social.hoverColor }}
+      ></span>
+    </a>
+  ))}
+</div>
+
           </div>
         </div>
       </div>

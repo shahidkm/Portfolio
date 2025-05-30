@@ -53,7 +53,7 @@ const BridgeonExperience = () => {
   ];
 
   return (
-    <div className="min-h-screen p-8 relative overflow-hidden" style={{ 
+    <div className="min-h-screen p-8 relative overflow-hidden mt-12" style={{ 
       background: 'linear-gradient(135deg, #F2F2F2 0%, #EAE4D5 50%, #B6B09F 100%)'
     }}>
       {/* Animated Background Elements */}
