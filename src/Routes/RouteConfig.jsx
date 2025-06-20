@@ -4,6 +4,7 @@ import Display from '../pages/Display';
 import LabourLink from '../components/LabourLink';
 import Projects from '../pages/Projects';
 import Experience from '../pages/Experience';
+import DevelopingExperience from '../pages/DevelopingExperience';
 function RouteConfig() {
   return (
     <div>
@@ -14,6 +15,7 @@ function RouteConfig() {
 
 <Route path='/projects' element={<Projects/>}></Route>
 <Route path='/experiences' element={<Experience/>}></Route>
+<Route path='/personal' element={<DevelopingExperience/>}/>
 
             </Routes>      
              </Router>
