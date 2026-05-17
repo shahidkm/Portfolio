@@ -1,429 +1,328 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight, Github, Linkedin, Mail, Download } from 'lucide-react';
 
-
-const BlurText = ({ text, className, delay = 0, onAnimationComplete, style }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  
+/* ── Typewriter ── */
+const ROLES = ['.NET Developer', 'React Developer', 'Full Stack Dev', 'Problem Solver'];
+function Typewriter() {
+  const [idx, setIdx] = useState(0);
+  const [text, setText] = useState('');
+  const [deleting, setDeleting] = useState(false);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-      if (onAnimationComplete) {
-        setTimeout(onAnimationComplete, 1200);
-      }
-    }, delay);
-    return () => clearTimeout(timer);
-  }, [delay, onAnimationComplete]);
-  
+    const full = ROLES[idx];
+    const speed = deleting ? 35 : 75;
+    const t = setTimeout(() => {
+      if (!deleting && text === full) { setTimeout(() => setDeleting(true), 2000); return; }
+      if (deleting && text === '')   { setDeleting(false); setIdx(i => (i + 1) % ROLES.length); return; }
+      setText(deleting ? full.slice(0, text.length - 1) : full.slice(0, text.length + 1));
+    }, speed);
+    return () => clearTimeout(t);
+  }, [text, deleting, idx]);
   return (
-    <h1 
-      className={`${className} transition-all duration-1000 ease-out ${
-        isVisible ? 'opacity-100 transform translate-y-0 blur-0' : 'opacity-0 transform translate-y-12 blur-sm'
-      }`}
-      style={style}
-    >
-      {text}
-    </h1>
-  );
-};
-
-function Home() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-
-  const handleAnimationComplete = () => {
-    console.log('Animation completed!');
-  };
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <div 
-      className="min-h-screen w-full relative overflow-hidden mt-16"
-      style={{ backgroundColor: '#F2F2F2' }}
-      onMouseMove={handleMouseMove}
-    >
-      {/* Modern Grid Background */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div 
-          className="w-full h-full"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(182, 176, 159, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(182, 176, 159, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '80px 80px'
-          }}
-        ></div>
-      </div>
-
-      {/* Enhanced Mouse-Following Glow */}
-      <div 
-        className="absolute w-[600px] h-[600px] rounded-full transition-all duration-700 ease-out pointer-events-none"
-        style={{
-          left: mousePosition.x - 300,
-          top: mousePosition.y - 300,
-          background: `radial-gradient(circle, rgba(182, 176, 159, 0.12) 0%, rgba(234, 228, 213, 0.06) 40%, transparent 70%)`,
-          transform: `translate3d(0, ${scrollY * 0.2}px, 0)`,
-          filter: 'blur(1px)'
-        }}
-      ></div>
-
-      {/* Refined Floating Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div 
-          className="absolute top-24 left-[12%] w-[2px] h-32"
-          style={{ 
-            background: `linear-gradient(to bottom, rgba(182, 176, 159, 0.8), rgba(234, 228, 213, 0.4), transparent)`,
-            animation: 'pulse 4s infinite',
-            animationDelay: '0.5s'
-          }}
-        ></div>
-        <div 
-          className="absolute top-40 right-[18%] w-3 h-3 rounded-full"
-          style={{ 
-            backgroundColor: 'rgba(182, 176, 159, 0.6)',
-            animation: 'pulse 5s infinite',
-            boxShadow: '0 0 20px rgba(182, 176, 159, 0.3)'
-          }}
-        ></div>
-        <div 
-          className="absolute bottom-32 left-[6%] w-4 h-4 rotate-45 rounded-sm"
-          style={{ 
-            backgroundColor: 'rgba(234, 228, 213, 0.8)',
-            animation: 'spin 15s linear infinite'
-          }}
-        ></div>
-        <div 
-          className="absolute top-[65%] right-[8%] w-16 h-[1px]"
-          style={{ 
-            background: `linear-gradient(to right, transparent, rgba(182, 176, 159, 0.7), transparent)`,
-            animation: 'pulse 6s infinite'
-          }}
-        ></div>
-        <div 
-          className="absolute top-[20%] left-[70%] w-1 h-20 rounded-full"
-          style={{ 
-            background: `linear-gradient(to bottom, rgba(234, 228, 213, 0.6), transparent)`,
-            animation: 'pulse 3.5s infinite',
-            animationDelay: '1s'
-          }}
-        ></div>
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
-          
-          {/* Left Side - Enhanced Profile */}
-          <div className="flex justify-center lg:justify-end order-2 lg:order-1">
-            <div 
-              className="relative group cursor-pointer"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              {/* Enhanced Border Effect */}
-              <div className="absolute -inset-4">
-                <div 
-                  className="w-full h-full rounded-[2rem] opacity-0 group-hover:opacity-100 transition-all duration-1000"
-                  style={{ 
-                    background: `conic-gradient(from 0deg, transparent, rgba(182, 176, 159, 0.4), transparent, rgba(234, 228, 213, 0.4), transparent)`,
-                    animation: isHovered ? 'spin 4s linear infinite' : 'none',
-                    filter: 'blur(1px)'
-                  }}
-                ></div>
-              </div>
-              
-              {/* Image Container */}
-              <div className="relative">
-                <img 
-                  src="assets/myImage.JPG" 
-                  alt="Muhammed Shahid" 
-                  className={`w-80 h-80 lg:w-96 lg:h-96 object-cover rounded-[2rem] transition-all duration-1000 ${
-                    isHovered ? 'scale-[1.03] brightness-110' : ''
-                  }`}
-                  style={{
-                    boxShadow: isHovered 
-                      ? '0 50px 100px -20px rgba(182, 176, 159, 0.4), 0 20px 60px -20px rgba(0, 0, 0, 0.2)' 
-                      : '0 30px 60px -15px rgba(0, 0, 0, 0.2), 0 10px 30px -10px rgba(182, 176, 159, 0.1)',
-                    filter: isHovered ? 'saturate(1.15) contrast(1.05)' : 'saturate(1)'
-                  }}
-                />
-                
-                {/* Enhanced Overlay */}
-                <div 
-                  className="absolute inset-0 rounded-[2rem] transition-all duration-1000"
-                  style={{ 
-                    background: `linear-gradient(135deg, rgba(0, 0, 0, 0.03), transparent 40%, rgba(182, 176, 159, 0.08))`,
-                    opacity: isHovered ? 0.8 : 0.4
-                  }}
-                ></div>
-              </div>
-              
-              {/* Enhanced Status Badge */}
-              <div 
-                className="absolute -bottom-4 -right-4 flex items-center gap-3 backdrop-blur-lg px-6 py-3 rounded-2xl border transition-all duration-700"
-                style={{ 
-                  backgroundColor: 'rgba(242, 242, 242, 0.98)',
-                  borderColor: 'rgba(182, 176, 159, 0.3)',
-                  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(182, 176, 159, 0.2)'
-                }}
-              >
-                <div 
-                  className="w-3 h-3 rounded-full relative"
-                  style={{ backgroundColor: '#B6B09F' }}
-                >
-                  <div 
-                    className="absolute inset-0 rounded-full animate-ping"
-                    style={{ backgroundColor: '#B6B09F', animationDuration: '3s' }}
-                  ></div>
-                </div>
-                <span 
-                  className="text-sm font-medium tracking-wide"
-                  style={{ color: '#000000' }}
-                >
-                  Available for Work
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side - Enhanced Content */}
-          <div className="space-y-12 text-center lg:text-left order-1 lg:order-2">
-            
-            {/* Name Section */}
-            <div className="space-y-8">
-              <BlurText
-                className="text-5xl lg:text-7xl xl:text-8xl font-extralight leading-[0.85] tracking-tight"
-                text="MUHAMMED SHAHID"
-                delay={300}
-                onAnimationComplete={handleAnimationComplete}
-                style={{
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
-                  fontWeight: 200,
-                  background: `linear-gradient(135deg, #000000 0%, #B6B09F 40%, #000000 70%, #B6B09F 100%)`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  backgroundSize: '300% 300%',
-                  animation: 'gradient 8s ease infinite'
-                }}
-              />
-              
-              {/* Enhanced Role */}
-              <div className="flex items-center justify-center lg:justify-start gap-6">
-                <div 
-                  className="w-16 h-[2px] rounded-full"
-                  style={{ 
-                    background: `linear-gradient(to right, transparent, #B6B09F, transparent)` 
-                  }}
-                ></div>
-                <span 
-                  className="text-xl lg:text-2xl font-extralight tracking-[0.25em] uppercase"
-                  style={{ color: '#000000', opacity: 0.8 }}
-                >
-                  Full Stack Developer
-                </span>
-                <div 
-                  className="w-16 h-[2px] rounded-full"
-                  style={{ 
-                    background: `linear-gradient(to right, transparent, #B6B09F, transparent)` 
-                  }}
-                ></div>
-              </div>
-            </div>
-
-            {/* Enhanced Description */}
-            <div className="space-y-8">
-              <p 
-                className="text-lg lg:text-xl leading-relaxed max-w-2xl font-light"
-                style={{ color: '#000000', lineHeight: 1.8, opacity: 0.9 }}
-              >
-              Hi, I'm Shahid — a self-taught .NET Developer focused on creating modern, user-friendly, and robust software solutions.
-              </p>
-              
-              {/* Key Highlights */}
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start max-w-xl">
-                {[
-                 
-                  'Dot Net Developer',
-                  'React Developer',
-                 
-                  'Accountant'
-                ].map((highlight, index) => (
-                  <div 
-                    key={highlight}
-                    className="group relative overflow-hidden px-5 py-2.5 rounded-full border transition-all duration-500 hover:scale-105 cursor-default"
-                    style={{ 
-                      backgroundColor: 'rgba(255, 255, 255, 0.6)',
-                      borderColor: 'rgba(182, 176, 159, 0.25)',
-                      backdropFilter: 'blur(10px)',
-                      animationDelay: `${index * 150}ms`
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = 'rgba(182, 176, 159, 0.15)';
-                      e.target.style.borderColor = 'rgba(182, 176, 159, 0.5)';
-                      e.target.style.transform = 'scale(1.05) translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
-                      e.target.style.borderColor = 'rgba(182, 176, 159, 0.25)';
-                      e.target.style.transform = 'scale(1)';
-                    }}
-                  >
-                    <span 
-                      className="text-sm font-medium tracking-wide"
-                      style={{ color: '#000000' }}
-                    >
-                      {highlight}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Enhanced CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start pt-8">
-              <button 
-                className="group relative px-10 py-5 font-medium rounded-2xl transition-all duration-500 hover:scale-[1.02] overflow-hidden"
-                style={{
-                  backgroundColor: '#000000',
-                  color: '#F2F2F2',
-                  boxShadow: '0 12px 24px -6px rgba(0, 0, 0, 0.3)'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.boxShadow = '0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 8px 20px -5px rgba(182, 176, 159, 0.3)';
-                  e.target.style.transform = 'scale(1.02) translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.boxShadow = '0 12px 24px -6px rgba(0, 0, 0, 0.3)';
-                  e.target.style.transform = 'scale(1)';
-                }}
-              >
-                <span className="relative z-10 tracking-wide text-base">View Portfolio</span>
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  style={{ 
-                    background: `linear-gradient(135deg, #B6B09F, #000000, #B6B09F)`,
-                    backgroundSize: '300% 300%',
-                    animation: 'gradient 3s ease infinite'
-                  }}
-                ></div>
-              </button>
-              
-              <button 
-                className="group px-10 py-5 font-medium rounded-2xl border transition-all duration-500 hover:scale-[1.02] relative overflow-hidden backdrop-blur-sm"
-                style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                  color: '#000000',
-                  borderColor: 'rgba(182, 176, 159, 0.4)'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = 'rgba(182, 176, 159, 0.2)';
-                  e.target.style.borderColor = '#B6B09F';
-                  e.target.style.transform = 'scale(1.02) translateY(-2px)';
-                  e.target.style.boxShadow = '0 12px 25px -5px rgba(182, 176, 159, 0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
-                  e.target.style.borderColor = 'rgba(182, 176, 159, 0.4)';
-                  e.target.style.transform = 'scale(1)';
-                  e.target.style.boxShadow = 'none';
-                }}
-              >
-                <span className="tracking-wide text-base">Download CV</span>
-              </button>
-            </div>
-
-            {/* Enhanced Social Links */}
-           <div className="flex gap-10 justify-center lg:justify-start pt-8">
-  {[
-    { name: 'GitHub', hoverColor: '#000000', link: 'https://github.com/shahidkm' },
-    { name: 'LinkedIn', hoverColor: '#B6B09F', link: 'www.linkedin.com/in/muhammed-shahid-km' },
-    { name: 'Email', hoverColor: '#000000', link: 'kmshahid432@gmail.com' }
-  ].map((social) => (
-    <a 
-      key={social.name}
-      href={social.link} 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="group relative text-base font-medium tracking-wide transition-all duration-300 hover:-translate-y-2"
-      style={{ color: 'rgba(0, 0, 0, 0.6)' }}
-      onMouseEnter={(e) => {
-        e.target.style.color = social.hoverColor;
-        e.target.style.textShadow = `0 4px 12px ${social.hoverColor}30`;
-      }}
-      onMouseLeave={(e) => {
-        e.target.style.color = 'rgba(0, 0, 0, 0.6)';
-        e.target.style.textShadow = 'none';
-      }}
-    >
-      {social.name}
-      <span 
-        className="absolute -bottom-2 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-500 rounded-full"
-        style={{ backgroundColor: social.hoverColor }}
-      ></span>
-    </a>
-  ))}
-</div>
-
-          </div>
-        </div>
-      </div>
-
-      {/* Enhanced Bottom Accent */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-4">
-        <div 
-          className="w-20 h-[2px] rounded-full"
-          style={{ 
-            background: `linear-gradient(to right, transparent, #B6B09F, transparent)` 
-          }}
-        ></div>
-        <div 
-          className="w-2 h-2 rounded-full"
-          style={{ backgroundColor: '#B6B09F', animation: 'pulse 3s infinite' }}
-        ></div>
-        <div 
-          className="w-20 h-[2px] rounded-full"
-          style={{ 
-            background: `linear-gradient(to right, transparent, #B6B09F, transparent)` 
-          }}
-        ></div>
-      </div>
-
-      {/* Enhanced custom animations */}
-      <style jsx>{`
-        @keyframes gradient {
-          0%, 100% { background-position: 0% 50%; }
-          25% { background-position: 50% 0%; }
-          50% { background-position: 100% 50%; }
-          75% { background-position: 50% 100%; }
-        }
-        
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(0.95); }
-        }
-      `}</style>
-    </div>
+    <span className="inline-flex items-center gap-1" style={{ color: '#B6B09F' }}>
+      {text}<span className="animate-blink" style={{ color: '#B6B09F' }}>|</span>
+    </span>
   );
 }
 
-export default Home;
+/* ── Letter drop ── */
+function AnimatedName({ name, delay = 0 }) {
+  return (
+    <span style={{ display: 'inline-block' }}>
+      {name.split('').map((ch, i) => (
+        <span key={i} className="inline-block opacity-0"
+          style={{ animation: 'letterDrop 0.55s var(--ease-out-expo) forwards', animationDelay: `${delay + i * 0.045}s`, perspective: '500px' }}>
+          {ch === ' ' ? '\u00A0' : ch}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/* ── Magnetic button ── */
+function MagneticBtn({ children, className, style, onClick }) {
+  const ref = useRef(null);
+  const move = (e) => {
+    const r = ref.current.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width  / 2) * 0.22;
+    const y = (e.clientY - r.top  - r.height / 2) * 0.22;
+    ref.current.style.transform = `translate(${x}px, ${y}px) translateZ(0)`;
+  };
+  const leave = () => { ref.current.style.transform = 'translate(0,0) translateZ(0)'; };
+  return (
+    <button ref={ref} onMouseMove={move} onMouseLeave={leave} onClick={onClick}
+      className={`magnetic ${className}`} style={style}>
+      {children}
+    </button>
+  );
+}
+
+/* ── Particles (stable, no re-render) ── */
+const PARTICLES = Array.from({ length: 28 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * 2.5 + 0.8,
+  delay: Math.random() * 9,
+  duration: Math.random() * 5 + 5,
+  opacity: Math.random() * 0.4 + 0.15,
+}));
+
+export default function Home() {
+  const navigate = useNavigate();
+  const containerRef  = useRef(null);
+  const glowRef       = useRef(null);   // mouse glow div
+  const cursorRef     = useRef(null);   // cursor dot
+  const mouseTarget   = useRef({ x: -999, y: -999 });
+  const mouseCurrent  = useRef({ x: -999, y: -999 });
+  const rafRef        = useRef(null);
+  const [ripples, setRipples] = useState([]);
+
+  /* Lerp mouse glow via RAF — silky smooth, zero re-renders */
+  useEffect(() => {
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const tick = () => {
+      const t = mouseTarget.current;
+      const c = mouseCurrent.current;
+      c.x = lerp(c.x, t.x, 0.08);
+      c.y = lerp(c.y, t.y, 0.08);
+      if (glowRef.current) {
+        glowRef.current.style.left = `${c.x - 350}px`;
+        glowRef.current.style.top  = `${c.y - 350}px`;
+      }
+      if (cursorRef.current) {
+        cursorRef.current.style.left = `${t.x}px`;
+        cursorRef.current.style.top  = `${t.y}px`;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (rect) {
+      mouseTarget.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+  }, []);
+
+  const handleClick = (e) => {
+    const id = Date.now();
+    setRipples(r => [...r, { id, x: e.clientX, y: e.clientY }]);
+    setTimeout(() => setRipples(r => r.filter(rp => rp.id !== id)), 900);
+  };
+
+  return (
+    <div ref={containerRef} onMouseMove={handleMouseMove} onClick={handleClick}
+      className="min-h-screen w-full relative overflow-hidden flex items-center"
+      style={{ background: 'linear-gradient(135deg, #080808 0%, #111111 60%, #0a0a0a 100%)' }}>
+
+      {/* Cursor dot — positioned via RAF, no React state */}
+      <div ref={cursorRef} className="cursor-glow" style={{ width: 14, height: 14 }} />
+
+      {/* Click ripples */}
+      {ripples.map(rp => (
+        <div key={rp.id} className="fixed pointer-events-none rounded-full"
+          style={{ left: rp.x - 20, top: rp.y - 20, width: 40, height: 40,
+            border: '1px solid rgba(182,176,159,0.45)',
+            animation: 'ripple 0.9s var(--ease-smooth) forwards' }} />
+      ))}
+
+      {/* Mouse glow — moved via RAF lerp */}
+      <div ref={glowRef} className="absolute pointer-events-none"
+        style={{ width: 700, height: 700, borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(182,176,159,0.065) 0%, transparent 65%)',
+          willChange: 'left, top' }} />
+
+      {/* Grid */}
+      <div className="absolute inset-0 opacity-[0.022]"
+        style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+
+      {/* Morphing blobs */}
+      <div className="absolute animate-morph animate-glow-pulse pointer-events-none"
+        style={{ top: '8%', right: '-6%', width: 520, height: 520,
+          background: 'radial-gradient(circle at 40% 40%, rgba(182,176,159,0.11), rgba(234,228,213,0.03) 60%, transparent)',
+          filter: 'blur(45px)', willChange: 'border-radius' }} />
+      <div className="absolute animate-morph animate-glow-pulse pointer-events-none"
+        style={{ bottom: '4%', left: '-9%', width: 420, height: 420,
+          background: 'radial-gradient(circle at 60% 60%, rgba(234,228,213,0.07), transparent 70%)',
+          filter: 'blur(55px)', animationDelay: '5s', willChange: 'border-radius' }} />
+
+      {/* Orbiting dots */}
+      <div className="absolute pointer-events-none" style={{ top: '50%', right: '18%', transform: 'translate(50%,-50%)' }}>
+        {[0,1,2].map(i => (
+          <div key={i} className="absolute w-2 h-2 rounded-full"
+            style={{ background: i === 0 ? '#B6B09F' : i === 1 ? '#EAE4D5' : 'rgba(255,255,255,0.25)',
+              animation: `orbit ${9 + i * 3}s linear infinite`, animationDelay: `${i * 2.5}s`,
+              top: '50%', left: '50%', marginTop: -4, marginLeft: -4, willChange: 'transform' }} />
+        ))}
+      </div>
+
+      {/* Particles */}
+      {PARTICLES.map(p => (
+        <div key={p.id} className="absolute rounded-full pointer-events-none"
+          style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size,
+            background: `rgba(182,176,159,${p.opacity})`,
+            animation: `drift ${p.duration}s ease-in-out ${p.delay}s infinite`,
+            willChange: 'transform, opacity' }} />
+      ))}
+
+      {/* Aurora sweeps */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-0 h-full w-28 opacity-[0.028] animate-aurora"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(182,176,159,0.9), transparent)', animationDuration: '7s' }} />
+        <div className="absolute top-0 left-0 h-full w-20 opacity-[0.018] animate-aurora"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(234,228,213,0.9), transparent)', animationDuration: '11s', animationDelay: '4s' }} />
+      </div>
+
+      {/* ── Content ── */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-24 pb-16">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+          {/* Text */}
+          <div className="space-y-8 order-2 lg:order-1">
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm opacity-0 animate-bounce-in neon-hover"
+              style={{ background: 'rgba(182,176,159,0.08)', border: '1px solid rgba(182,176,159,0.2)', color: '#B6B09F', animationFillMode: 'both' }}>
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              Available for Work
+            </div>
+
+            <div className="opacity-0 animate-fade-up delay-100" style={{ animationFillMode: 'both' }}>
+              <h1 className="text-5xl lg:text-7xl xl:text-8xl font-black leading-[0.9] tracking-tight">
+                <span className="text-gradient"><AnimatedName name="MUHAMMED" delay={0.3} /></span>
+                <br />
+                <span style={{ color: 'rgba(255,255,255,0.9)' }}><AnimatedName name="SHAHID" delay={0.72} /></span>
+              </h1>
+            </div>
+
+            <div className="flex items-center gap-4 opacity-0 animate-fade-up delay-300" style={{ animationFillMode: 'both' }}>
+              <div className="h-px w-12" style={{ background: 'linear-gradient(to right, transparent, #B6B09F)' }} />
+              <span className="text-lg font-light tracking-widest uppercase"><Typewriter /></span>
+              <div className="h-px w-12" style={{ background: 'linear-gradient(to left, transparent, #B6B09F)' }} />
+            </div>
+
+            <p className="text-lg leading-relaxed max-w-lg opacity-0 animate-fade-up delay-400"
+              style={{ color: 'rgba(255,255,255,0.45)', lineHeight: 1.9, animationFillMode: 'both' }}>
+              Self-taught .NET & React Developer crafting modern, scalable software solutions with clean architecture and exceptional user experiences.
+            </p>
+
+            <div className="flex flex-wrap gap-3 opacity-0 animate-fade-up delay-500" style={{ animationFillMode: 'both' }}>
+              {['.NET Developer', 'React Developer', 'Accountant'].map((tag, i) => (
+                <span key={tag} className="px-4 py-2 text-sm font-medium rounded-full cursor-default"
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
+                    color: 'rgba(255,255,255,0.55)',
+                    transition: 'background 0.35s var(--ease-smooth), color 0.35s var(--ease-smooth), transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-smooth)',
+                    willChange: 'transform' }}
+                  onMouseEnter={e => { const el = e.currentTarget; el.style.background = 'rgba(182,176,159,0.1)'; el.style.color = '#B6B09F'; el.style.transform = 'translateY(-3px) translateZ(0)'; el.style.boxShadow = '0 8px 24px rgba(182,176,159,0.15)'; }}
+                  onMouseLeave={e => { const el = e.currentTarget; el.style.background = 'rgba(255,255,255,0.03)'; el.style.color = 'rgba(255,255,255,0.55)'; el.style.transform = 'translateY(0) translateZ(0)'; el.style.boxShadow = 'none'; }}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-4 opacity-0 animate-fade-up delay-600" style={{ animationFillMode: 'both' }}>
+              <MagneticBtn onClick={() => navigate('/projects')}
+                className="group relative flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-sm overflow-hidden"
+                style={{ background: 'linear-gradient(135deg, #B6B09F, #EAE4D5)', color: '#0a0a0a',
+                  boxShadow: '0 0 36px rgba(182,176,159,0.3)',
+                  transition: 'box-shadow 0.4s var(--ease-smooth)' }}>
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 animate-aurora"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent)', animationDuration: '1.8s' }} />
+                <span className="relative">View Projects</span>
+                <ArrowRight size={16} className="relative"
+                  style={{ transition: 'transform 0.35s var(--ease-spring)', transform: 'translateX(0)' }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'translateX(4px)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'translateX(0)'} />
+              </MagneticBtn>
+
+              <MagneticBtn className="flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-sm glass neon-hover"
+                style={{ color: 'rgba(255,255,255,0.7)' }}>
+                <Download size={16} />
+                Download CV
+              </MagneticBtn>
+            </div>
+
+            <div className="flex gap-8 opacity-0 animate-fade-up delay-700" style={{ animationFillMode: 'both' }}>
+              {[
+                { icon: Github,   href: 'https://github.com/shahidkm',                        label: 'GitHub'   },
+                { icon: Linkedin, href: 'https://www.linkedin.com/in/muhammed-shahid-km',      label: 'LinkedIn' },
+                { icon: Mail,     href: 'mailto:kmshahid432@gmail.com',                        label: 'Email'    },
+              ].map(({ icon: Icon, href, label }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  className="group relative flex items-center gap-2 text-sm font-medium reveal-line"
+                  style={{ color: 'rgba(255,255,255,0.35)',
+                    transition: 'color 0.35s var(--ease-smooth), transform 0.35s var(--ease-spring)',
+                    willChange: 'transform' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#B6B09F'; e.currentTarget.style.transform = 'translateY(-3px) translateZ(0)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.35)'; e.currentTarget.style.transform = 'translateY(0) translateZ(0)'; }}>
+                  <Icon size={15} style={{ transition: 'transform 0.35s var(--ease-spring)' }}
+                    className="group-hover:rotate-12" />
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Image */}
+          <div className="flex justify-center order-1 lg:order-2 opacity-0 animate-fade-right delay-300" style={{ animationFillMode: 'both' }}>
+            <div className="relative group" style={{ willChange: 'transform' }}>
+              <div className="absolute -inset-6 rounded-[3rem] animate-spin-slow opacity-[0.18]"
+                style={{ background: 'conic-gradient(from 0deg, transparent 50%, #B6B09F 70%, #EAE4D5 80%, transparent 100%)', willChange: 'transform' }} />
+              <div className="absolute -inset-3 rounded-[2.5rem] animate-spin-rev opacity-[0.12]"
+                style={{ background: 'conic-gradient(from 180deg, transparent 60%, rgba(234,228,213,0.55) 75%, transparent 100%)', willChange: 'transform' }} />
+              <div className="absolute -inset-2 rounded-[2.5rem] blur-2xl opacity-20 animate-glow-pulse"
+                style={{ background: 'linear-gradient(135deg, #B6B09F, #EAE4D5)',
+                  transition: 'opacity 0.6s var(--ease-smooth)' }} />
+
+              <img src="assets/myImage.JPG" alt="Muhammed Shahid"
+                className="relative w-72 h-72 lg:w-96 lg:h-96 object-cover rounded-[2rem]"
+                style={{ border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 50px 100px rgba(0,0,0,0.65)',
+                  transition: 'transform 0.6s var(--ease-spring), filter 0.6s var(--ease-smooth)',
+                  willChange: 'transform' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.04) translateZ(0)'; e.currentTarget.style.filter = 'brightness(1.05)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1) translateZ(0)'; e.currentTarget.style.filter = 'brightness(1)'; }} />
+
+              {/* Scan line on hover */}
+              <div className="absolute inset-0 rounded-[2rem] overflow-hidden pointer-events-none opacity-0 group-hover:opacity-100"
+                style={{ transition: 'opacity 0.4s var(--ease-smooth)' }}>
+                <div className="absolute left-0 right-0 h-px"
+                  style={{ background: 'linear-gradient(to right, transparent, rgba(182,176,159,0.7), transparent)', animation: 'scanLine 2.2s linear infinite' }} />
+              </div>
+
+              {/* Stat badges */}
+              {[
+                { val: '1+', sub: 'Years Exp.', pos: { bottom: -24, left: -24 }, delay: '0.8s' },
+                { val: '5+', sub: 'Projects',   pos: { top: -24, right: -24 },   delay: '0.95s' },
+                { val: '15+',sub: 'Tech Stack', pos: { bottom: -24, right: -24 },delay: '1.1s' },
+              ].map(({ val, sub, pos, delay }) => (
+                <div key={val} className="absolute px-5 py-3 rounded-2xl glass-strong neon-hover opacity-0 animate-bounce-in"
+                  style={{ ...pos, animationDelay: delay, animationFillMode: 'both',
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.45)',
+                    transition: 'transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-smooth)',
+                    willChange: 'transform' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.08) translateZ(0)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1) translateZ(0)'; }}>
+                  <div className="text-2xl font-black text-gradient">{val}</div>
+                  <div className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>{sub}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="flex justify-center mt-24 opacity-0 animate-fade-up delay-1000" style={{ animationFillMode: 'both' }}>
+          <div className="flex flex-col items-center gap-3">
+            <span className="text-xs tracking-[0.4em] uppercase" style={{ color: 'rgba(255,255,255,0.18)' }}>Scroll</span>
+            <div className="relative w-5 h-9 rounded-full" style={{ border: '1px solid rgba(255,255,255,0.12)' }}>
+              <div className="absolute left-1/2 top-1.5 w-1 h-2 rounded-full -translate-x-1/2"
+                style={{ background: '#B6B09F', animation: 'float 1.6s ease-in-out infinite', willChange: 'transform' }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

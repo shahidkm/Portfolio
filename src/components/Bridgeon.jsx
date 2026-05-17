@@ -1,310 +1,200 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Code, Server, Database, Shield, Globe, GitBranch, Users, Zap } from 'lucide-react';
 
-const BridgeonExperience = () => {
+function useInView(threshold = 0.15) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+}
+
+const technologies = [
+  { name: '.NET Core',    icon: Code,      category: 'Backend'   },
+  { name: 'Entity Framework', icon: Database, category: 'ORM'   },
+  { name: 'SQL Server',   icon: Database,  category: 'Database'  },
+  { name: 'MassTransit',  icon: Server,    category: 'Messaging' },
+  { name: 'RabbitMQ',     icon: Server,    category: 'Queue'     },
+  { name: 'Docker',       icon: Server,    category: 'Container' },
+  { name: 'Azure AKS',    icon: Globe,     category: 'Cloud'     },
+  { name: 'JWT Auth',     icon: Shield,    category: 'Security'  },
+  { name: 'React',        icon: Code,      category: 'Frontend'  },
+  { name: 'TypeScript',   icon: Code,      category: 'Language'  },
+  { name: 'Tailwind CSS', icon: Code,      category: 'Styling'   },
+  { name: 'Git',          icon: GitBranch, category: 'VCS'       },
+];
+
+const achievements = [
+  { title: 'Scalable Backend Systems',   desc: 'Developed robust backend systems using .NET Core and Entity Framework Core with clean architecture patterns', icon: Server },
+  { title: 'Microservices Architecture', desc: 'Built and deployed microservices with MassTransit, RabbitMQ, and Docker orchestration', icon: Globe },
+  { title: 'Security Implementation',    desc: 'Created secure JWT-based authentication with session management for multi-tenant applications', icon: Shield },
+  { title: 'Performance Optimization',   desc: 'Designed RESTful APIs and optimized database queries for high performance', icon: Zap },
+  { title: 'Full-Stack Integration',     desc: 'Integrated responsive UIs using React, TypeScript, and Tailwind CSS', icon: Code },
+  { title: 'Team Collaboration',         desc: 'Used Git for version control and collaborated across teams maintaining high code quality', icon: Users },
+];
+
+const overview = [
+  { title: 'Backend Development',       desc: 'Developed scalable backend systems using .NET Core, Entity Framework Core, and SQL Server, following clean architecture and CQRS patterns.' },
+  { title: 'Microservices & Cloud',     desc: 'Built and deployed microservices with MassTransit, RabbitMQ, and Docker, orchestrated via Azure Kubernetes Service (AKS).' },
+  { title: 'Security & Authentication', desc: 'Created secure JWT-based authentication and session management with cookie support for multi-tenant applications.' },
+  { title: 'Frontend Integration',      desc: 'Integrated responsive UIs using React, TypeScript, and Tailwind CSS, ensuring smooth frontend-backend interaction.' },
+];
+
+const TABS = ['overview', 'technologies', 'achievements'];
+
+const smooth = (delay = 0) => ({
+  opacity: 1, transform: 'translateY(0) translateZ(0)',
+  transition: `opacity 0.85s var(--ease-out-expo) ${delay}s, transform 0.85s var(--ease-out-expo) ${delay}s`,
+});
+const hidden = { opacity: 0, transform: 'translateY(30px) translateZ(0)' };
+
+export default function BridgeonExperience() {
   const [activeTab, setActiveTab] = useState('overview');
-
-  const technologies = [
-    { name: '.NET Core', icon: Code, category: 'Backend' },
-    { name: 'Entity Framework', icon: Database, category: 'ORM' },
-    { name: 'SQL Server', icon: Database, category: 'Database' },
-    { name: 'MassTransit', icon: Server, category: 'Messaging' },
-    { name: 'RabbitMQ', icon: Server, category: 'Queue' },
-    { name: 'Docker', icon: Server, category: 'Container' },
-    { name: 'Azure AKS', icon: Globe, category: 'Cloud' },
-    { name: 'JWT Auth', icon: Shield, category: 'Security' },
-    { name: 'React', icon: Code, category: 'Frontend' },
-    { name: 'TypeScript', icon: Code, category: 'Language' },
-    { name: 'Tailwind CSS', icon: Code, category: 'Styling' },
-    { name: 'Git', icon: GitBranch, category: 'VCS' }
-  ];
-
-  const achievements = [
-    {
-      title: 'Scalable Backend Systems',
-      description: 'Developed robust backend systems using .NET Core and Entity Framework Core with clean architecture patterns',
-      icon: Server
-    },
-    {
-      title: 'Microservices Architecture',
-      description: 'Built and deployed microservices with MassTransit, RabbitMQ, and Docker orchestration',
-      icon: Globe
-    },
-    {
-      title: 'Security Implementation',
-      description: 'Created secure JWT-based authentication with session management for multi-tenant applications',
-      icon: Shield
-    },
-    {
-      title: 'Performance Optimization',
-      description: 'Designed RESTful APIs and optimized database queries for high performance and data integrity',
-      icon: Zap
-    },
-    {
-      title: 'Full-Stack Integration',
-      description: 'Integrated responsive UIs using React, TypeScript, and Tailwind CSS with seamless backend interaction',
-      icon: Code
-    },
-    {
-      title: 'Team Collaboration',
-      description: 'Used Git for version control and collaborated across teams maintaining high code quality',
-      icon: Users
-    }
-  ];
+  const [headerRef, headerInView] = useInView();
+  const [contentRef, contentInView] = useInView();
 
   return (
-    <div className="min-h-screen p-8 relative overflow-hidden mt-12" style={{ 
-      background: 'linear-gradient(135deg, #F2F2F2 0%, #EAE4D5 50%, #B6B09F 100%)'
-    }}>
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating Geometric Shapes */}
-        <div className="absolute top-20 left-10 w-32 h-32 rounded-full opacity-10 animate-pulse" 
-             style={{ backgroundColor: '#000000' }}></div>
-        <div className="absolute top-40 right-20 w-24 h-24 rotate-45 opacity-5" 
-             style={{ backgroundColor: '#000000' }}></div>
-        <div className="absolute bottom-32 left-1/4 w-20 h-20 rounded-full opacity-10 animate-bounce" 
-             style={{ backgroundColor: '#B6B09F', animationDuration: '3s' }}></div>
-        <div className="absolute bottom-20 right-1/3 w-16 h-16 rotate-12 opacity-5" 
-             style={{ backgroundColor: '#000000' }}></div>
-        
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 opacity-5" 
-             style={{
-               backgroundImage: `
-                 linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
-                 linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
-               `,
-               backgroundSize: '40px 40px'
-             }}>
-        </div>
-        
-        {/* Subtle Gradient Orbs */}
-        <div className="absolute top-1/4 left-1/2 w-96 h-96 rounded-full opacity-5 blur-3xl"
-             style={{
-               background: 'radial-gradient(circle, #000000 0%, transparent 70%)',
-               transform: 'translate(-50%, -50%)'
-             }}>
-        </div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full opacity-5 blur-3xl"
-             style={{
-               background: 'radial-gradient(circle, #B6B09F 0%, transparent 70%)'
-             }}>
-        </div>
-      </div>
-      
-      <div className="max-w-6xl mx-auto relative z-10">
+    <div className="min-h-screen relative overflow-hidden py-24" style={{ background: '#0a0a0a' }}>
+      <div className="absolute top-0 left-0 w-full h-px"
+        style={{ background: 'linear-gradient(to right, transparent, rgba(182,176,159,0.3), transparent)' }} />
+      <div className="absolute top-1/4 left-0 w-96 h-96 rounded-full blur-3xl opacity-5 animate-float"
+        style={{ background: 'radial-gradient(circle, #B6B09F, transparent)', willChange: 'transform' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none animate-morph opacity-[0.025]"
+        style={{ background: 'radial-gradient(circle, #EAE4D5, transparent)', filter: 'blur(60px)', willChange: 'border-radius' }} />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-8">
+
         {/* Header */}
-        <div className="text-center mb-12 relative">
-          <div className="absolute inset-0 -z-10">
-            <div className="w-full h-full rounded-2xl opacity-10"
-                 style={{
-                   background: 'linear-gradient(45deg, transparent 30%, rgba(0,0,0,0.1) 50%, transparent 70%)'
-                 }}>
-            </div>
+        <div ref={headerRef} className="text-center mb-16"
+          style={headerInView ? smooth(0) : hidden}>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-widest uppercase mb-6"
+            style={{ background: 'rgba(182,176,159,0.1)', border: '1px solid rgba(182,176,159,0.2)', color: '#B6B09F' }}>
+            Work Experience
           </div>
-          <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-black via-gray-800 to-black">
-            Bridgeon Solution
+          <h1 className="text-5xl lg:text-7xl font-black mb-4">
+            <span className="text-gradient">Bridgeon</span>
+            <span style={{ color: 'rgba(255,255,255,0.9)' }}> Solution</span>
           </h1>
-          <div className="relative inline-block">
-            <p className="text-xl px-6 py-2 rounded-full backdrop-blur-sm border border-white/20" 
-               style={{ 
-                 color: '#B6B09F',
-                 background: 'rgba(255, 255, 255, 0.1)'
-               }}>
-              Calicut • Full-Stack Developer Experience • 1 Year
-            </p>
+          <div className="flex justify-center my-4">
+            <div style={{
+              width: headerInView ? '100px' : '0px', height: '2px',
+              background: 'linear-gradient(to right, transparent, #B6B09F, transparent)',
+              borderRadius: '2px',
+              transition: 'width 1s var(--ease-out-expo) 0.45s',
+            }} />
           </div>
+          <p className="text-base" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            Calicut · Full-Stack Developer · 1 Year
+          </p>
         </div>
 
-        {/* Navigation */}
-        <div className="flex justify-center mb-8">
-          <div className="flex rounded-2xl overflow-hidden backdrop-blur-md border border-white/20 shadow-2xl" 
-               style={{ 
-                 background: 'rgba(234, 228, 213, 0.8)',
-                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-               }}>
-            {['overview', 'technologies', 'achievements'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-6 py-3 font-medium capitalize transition-all duration-500 relative overflow-hidden ${
-                  activeTab === tab 
-                    ? 'text-white transform scale-105' 
-                    : 'hover:opacity-80 hover:scale-105'
-                }`}
+        {/* Tabs */}
+        <div className="flex justify-center mb-8"
+          style={headerInView ? { ...smooth(0.25), display: 'flex' } : { ...hidden, display: 'flex' }}>
+          <div className="flex p-1 rounded-2xl glass-strong gap-1">
+            {TABS.map((tab) => (
+              <button key={tab} onClick={() => setActiveTab(tab)}
+                className="relative px-6 py-2.5 text-sm font-medium capitalize rounded-xl overflow-hidden"
                 style={{
-                  backgroundColor: activeTab === tab ? '#000000' : 'transparent',
-                  color: activeTab === tab ? '#F2F2F2' : '#000000'
-                }}
-              >
+                  background:  activeTab === tab ? 'linear-gradient(135deg, #B6B09F, #EAE4D5)' : 'transparent',
+                  color:       activeTab === tab ? '#0a0a0a' : 'rgba(255,255,255,0.4)',
+                  transform:   activeTab === tab ? 'scale(1.04) translateZ(0)' : 'scale(1) translateZ(0)',
+                  boxShadow:   activeTab === tab ? '0 0 20px rgba(182,176,159,0.3)' : 'none',
+                  transition:  'background 0.35s var(--ease-smooth), color 0.35s var(--ease-smooth), transform 0.4s var(--ease-spring), box-shadow 0.35s var(--ease-smooth)',
+                  willChange:  'transform',
+                }}>
                 {activeTab === tab && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900 animate-pulse"></div>
+                  <span className="absolute inset-0 animate-aurora opacity-25"
+                    style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)', animationDuration: '2s' }} />
                 )}
-                <span className="relative z-10">{tab}</span>
+                <span className="relative">{tab}</span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Content */}
-        <div className="rounded-3xl p-8 shadow-2xl backdrop-blur-md border border-white/20 relative overflow-hidden" 
-             style={{ 
-               background: 'rgba(234, 228, 213, 0.9)',
-               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-             }}>
-          {/* Content Background Pattern */}
-          <div className="absolute inset-0 opacity-5 pointer-events-none">
-            <div className="absolute top-0 right-0 w-32 h-32 rounded-full" 
-                 style={{ background: 'radial-gradient(circle, #000000 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-            <div className="absolute bottom-0 left-0 w-40 h-40 rounded-full" 
-                 style={{ background: 'radial-gradient(circle, #B6B09F 1px, transparent 1px)', backgroundSize: '15px 15px' }}></div>
+        {/* Content panel */}
+        <div ref={contentRef} className="p-8 rounded-3xl glass-strong"
+          style={contentInView ? smooth(0.3) : hidden}>
+          <div key={activeTab} style={{ animation: 'fadeInUp 0.45s var(--ease-out-expo) both' }}>
+
+            {activeTab === 'overview' && (
+              <div className="grid md:grid-cols-2 gap-5">
+                {overview.map(({ title, desc }, i) => (
+                  <div key={title} className="p-6 rounded-2xl glass"
+                    style={{
+                      borderLeft: '2px solid rgba(182,176,159,0.3)',
+                      transition: 'transform 0.45s var(--ease-spring), box-shadow 0.45s var(--ease-smooth)',
+                      willChange: 'transform',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01) translateZ(0)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.3)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1) translateZ(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
+                    <h3 className="text-base font-bold mb-3" style={{ color: 'rgba(255,255,255,0.85)' }}>{title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>{desc}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === 'technologies' && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                {technologies.map(({ name, icon: Icon, category }, i) => (
+                  <div key={name} className="group p-4 rounded-2xl glass text-center"
+                    style={{
+                      transition: 'transform 0.5s var(--ease-spring), box-shadow 0.5s var(--ease-smooth)',
+                      willChange: 'transform',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px) scale(1.03) translateZ(0)'; e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.35), 0 0 30px rgba(182,176,159,0.08)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1) translateZ(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
+                    <Icon size={22} className="mx-auto mb-3 group-hover:scale-125 group-hover:rotate-6"
+                      style={{ color: '#B6B09F', transition: 'transform 0.45s var(--ease-spring)', willChange: 'transform' }} />
+                    <div className="text-sm font-semibold mb-1" style={{ color: 'rgba(255,255,255,0.7)' }}>{name}</div>
+                    <div className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>{category}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === 'achievements' && (
+              <div className="grid md:grid-cols-2 gap-5">
+                {achievements.map(({ title, desc, icon: Icon }) => (
+                  <div key={title} className="group flex items-start gap-4 p-5 rounded-2xl glass"
+                    style={{
+                      transition: 'transform 0.45s var(--ease-spring), box-shadow 0.45s var(--ease-smooth)',
+                      willChange: 'transform',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01) translateZ(0)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.3)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1) translateZ(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-6"
+                      style={{ background: 'rgba(182,176,159,0.1)', border: '1px solid rgba(182,176,159,0.15)', transition: 'transform 0.45s var(--ease-spring)', willChange: 'transform' }}>
+                      <Icon size={18} style={{ color: '#B6B09F' }} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold mb-1" style={{ color: 'rgba(255,255,255,0.85)' }}>{title}</div>
+                      <div className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>{desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold mb-6" style={{ color: '#000000' }}>
-                Professional Overview
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold" style={{ color: '#000000' }}>
-                    Backend Development
-                  </h3>
-                  <p style={{ color: '#B6B09F' }}>
-                    Developed scalable backend systems using .NET Core, Entity Framework Core, and SQL Server, 
-                    following clean architecture and CQRS patterns for maintainable and robust applications.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold" style={{ color: '#000000' }}>
-                    Microservices & Cloud
-                  </h3>
-                  <p style={{ color: '#B6B09F' }}>
-                    Built and deployed microservices with MassTransit, RabbitMQ, and Docker, 
-                    orchestrated via Azure Kubernetes Service (AKS) for scalable cloud solutions.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold" style={{ color: '#000000' }}>
-                    Security & Authentication
-                  </h3>
-                  <p style={{ color: '#B6B09F' }}>
-                    Created secure JWT-based authentication and session management with cookie support 
-                    for multi-tenant applications, ensuring robust security protocols.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold" style={{ color: '#000000' }}>
-                    Frontend Integration
-                  </h3>
-                  <p style={{ color: '#B6B09F' }}>
-                    Integrated responsive UIs using React, TypeScript, and Tailwind CSS, 
-                    ensuring smooth frontend-backend interaction and optimal user experience.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'technologies' && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold mb-6" style={{ color: '#000000' }}>
-                Technology Stack
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {technologies.map((tech, index) => {
-                  const IconComponent = tech.icon;
-                  return (
-                    <div 
-                      key={index}
-                      className="p-4 rounded-2xl text-center hover:scale-110 transition-all duration-500 cursor-pointer group backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-2xl"
-                      style={{ 
-                        background: 'linear-gradient(135deg, rgba(242, 242, 242, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%)',
-                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)'
-                      }}
-                    >
-                      <div className="relative">
-                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"
-                             style={{ background: 'linear-gradient(45deg, #000000, #B6B09F)' }}></div>
-                        <IconComponent className="w-8 h-8 mx-auto mb-2 transition-transform duration-500 group-hover:scale-125 relative z-10" 
-                                     style={{ color: '#000000' }} />
-                        <h3 className="font-semibold text-sm mb-1 relative z-10" style={{ color: '#000000' }}>
-                          {tech.name}
-                        </h3>
-                        <p className="text-xs relative z-10" style={{ color: '#B6B09F' }}>
-                          {tech.category}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'achievements' && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold mb-6" style={{ color: '#000000' }}>
-                Key Achievements
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {achievements.map((achievement, index) => {
-                  const IconComponent = achievement.icon;
-                  return (
-                    <div 
-                      key={index}
-                      className="p-6 rounded-2xl hover:scale-105 transition-all duration-500 group backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-2xl relative overflow-hidden"
-                      style={{ 
-                        background: 'linear-gradient(135deg, rgba(242, 242, 242, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%)',
-                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)'
-                      }}
-                    >
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-                           style={{ background: 'linear-gradient(45deg, #000000, #B6B09F)' }}></div>
-                      <div className="absolute top-0 right-0 w-20 h-20 rounded-full opacity-5 group-hover:opacity-10 transition-opacity duration-500"
-                           style={{ background: 'radial-gradient(circle, #000000, transparent)' }}></div>
-                      <div className="flex items-start space-x-4 relative z-10">
-                        <div className="p-2 rounded-xl group-hover:scale-110 transition-transform duration-500"
-                             style={{ background: 'rgba(0, 0, 0, 0.05)' }}>
-                          <IconComponent className="w-6 h-6 flex-shrink-0" style={{ color: '#000000' }} />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold mb-2" style={{ color: '#000000' }}>
-                            {achievement.title}
-                          </h3>
-                          <p className="text-sm" style={{ color: '#B6B09F' }}>
-                            {achievement.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12">
-          <div className="inline-flex items-center space-x-2 px-8 py-4 rounded-2xl backdrop-blur-md border border-white/20 shadow-2xl relative overflow-hidden group cursor-pointer transition-all duration-500 hover:scale-105" 
-               style={{ 
-                 background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 1) 100%)',
-                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-               }}>
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500"
-                 style={{ background: 'linear-gradient(45deg, #B6B09F, #EAE4D5)' }}></div>
-            <GitBranch className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform duration-500" 
-                     style={{ color: '#F2F2F2' }} />
-            <span className="font-medium relative z-10" style={{ color: '#F2F2F2' }}>
-              Committed to Excellence in Software Development
-            </span>
+        <div className="flex justify-center mt-10"
+          style={contentInView ? { ...smooth(0.5), display: 'flex' } : { ...hidden, display: 'flex' }}>
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl glass-strong neon-hover"
+            style={{ transition: 'transform 0.45s var(--ease-spring), box-shadow 0.45s var(--ease-smooth)', willChange: 'transform' }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05) translateZ(0)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1) translateZ(0)'; }}>
+            <GitBranch size={16} className="animate-float" style={{ color: '#B6B09F', animationDuration: '3s' }} />
+            <span className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.5)' }}>Committed to Excellence in Software Development</span>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default BridgeonExperience;
+}

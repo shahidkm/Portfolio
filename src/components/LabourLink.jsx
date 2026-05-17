@@ -1,153 +1,156 @@
-import React from 'react'
+import React, { useRef, useState, useEffect } from 'react';
 
-function LabourLink() {
-  return (
-    <div className='bg-[#F2F2F2] min-h-screen overflow-hidden mt-12'>
-      {/* Hero Section */}
-      <div className='relative w-full flex flex-col lg:flex-row justify-center items-center px-6 pt-12 lg:pt-20 gap-12'>
-        {/* Background Elements */}
-        <div className='absolute top-10 left-10 w-32 h-32 bg-[#EAE4D5] rounded-full opacity-20 animate-pulse'></div>
-        <div className='absolute bottom-20 right-20 w-24 h-24 bg-[#B6B09F] rounded-full opacity-30 animate-bounce delay-1000'></div>
-        
-        <div className='w-full lg:w-[55vw] flex flex-col items-center lg:items-start justify-center z-10'>
-          <div className='text-center lg:text-left lg:ml-8 transform hover:scale-105 transition-transform duration-300'>
-            <div className='relative'>
-              <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 text-[#000000] leading-tight tracking-tight'>
-                Labour
-                <span className='block text-[#B6B09F] relative'>
-                  Link
-                  <div className='absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#B6B09F] to-[#EAE4D5] rounded-full'></div>
-                </span>
-              </h1>
-            </div>
-            <h2 className='text-xl sm:text-2xl md:text-3xl text-[#B6B09F] font-medium mt-6 max-w-lg'>
-              Connecting Talent with Opportunity in the Modern Workforce
-            </h2>
-          </div>
-          
-          {/* Modern accent line */}
-          <div className='mt-8 lg:ml-8 w-full max-w-md'>
-            <div className='h-2 bg-gradient-to-r from-[#000000] via-[#B6B09F] to-[#EAE4D5] rounded-full shadow-lg'></div>
-          </div>
-        </div>
-        
-        <div className='w-full lg:w-[45vw] flex items-center justify-center px-4 z-10'>
-          <div className='relative group w-full max-w-lg lg:max-w-none lg:w-[45vw] h-72 sm:h-96 lg:h-[55vh]'>
-            {/* Floating background card */}
-            <div className='absolute inset-0 bg-[#EAE4D5] rounded-3xl shadow-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-500'></div>
-            <div className='absolute inset-2 bg-[#000000] rounded-3xl shadow-xl transform -rotate-2 group-hover:-rotate-4 transition-transform duration-500'></div>
-            <img 
-              src="assets/Lb01.png" 
-              alt="Labour Link Platform" 
-              className='relative w-full h-full object-fill rounded-3xl shadow-2xl group-hover:scale-105 transition-transform duration-500 border-4 border-[#F2F2F2]' 
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* About Section */}
-      <div className="relative flex flex-col lg:flex-row w-full mt-20 lg:mt-32 px-6 gap-12">
-        {/* Decorative elements */}
-        <div className='absolute top-0 left-1/2 w-16 h-16 bg-[#B6B09F] rounded-full opacity-40 transform -translate-x-1/2 animate-pulse'></div>
-        
-        <div className="w-full lg:w-[50vw] flex justify-center items-center order-2 lg:order-1">
-          <div className="relative group w-full max-w-lg lg:max-w-none lg:w-[45vw] h-72 sm:h-96 lg:h-[45vh]">
-            {/* Modern card stack effect */}
-            <div className='absolute inset-0 bg-[#B6B09F] rounded-2xl shadow-xl transform rotate-2 group-hover:rotate-4 transition-transform duration-500'></div>
-            <div className='absolute inset-1 bg-[#EAE4D5] rounded-2xl shadow-lg transform -rotate-1 group-hover:-rotate-2 transition-transform duration-500'></div>
-            <img 
-              src="assets/Lb02.png" 
-              alt="About Labour Link" 
-              className="relative w-full h-full object-fill rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-500 border-3 border-[#F2F2F2]" 
-            />
-          </div>
-        </div>
-
-        <div className="w-full lg:w-[50vw] flex flex-col items-center lg:items-start justify-center order-1 lg:order-2 text-center lg:text-left">
-          <div className='transform hover:translate-x-2 transition-transform duration-300'>
-            <h1 className='text-4xl sm:text-5xl lg:text-6xl font-black mb-6 text-[#000000] relative'>
-              About Website
-              <div className='absolute -bottom-2 left-0 w-1/3 h-1 bg-[#B6B09F] rounded-full'></div>
-            </h1>
-            <div className='bg-[#EAE4D5] p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-prose'>
-              <p className="text-lg sm:text-xl leading-relaxed text-[#000000] font-medium">
-                Labour Link revolutionizes workforce connections through intelligent matching and seamless communication. We bridge the gap between skilled professionals and forward-thinking employers.
-              </p>
-              <div className='mt-6 flex flex-wrap gap-3'>
-                <span className='px-4 py-2 bg-[#B6B09F] text-[#F2F2F2] rounded-full text-sm font-medium'>Smart Matching</span>
-                <span className='px-4 py-2 bg-[#000000] text-[#F2F2F2] rounded-full text-sm font-medium'>Verified Profiles</span>
-                <span className='px-4 py-2 bg-[#B6B09F] text-[#F2F2F2] rounded-full text-sm font-medium'>Secure Platform</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Features Section */}
-      <div className="relative flex flex-col lg:flex-row w-full mt-20 lg:mt-32 px-6 gap-12 pb-20">
-        {/* Background accent */}
-        <div className='absolute bottom-10 right-10 w-40 h-40 bg-[#EAE4D5] rounded-full opacity-20 animate-pulse delay-500'></div>
-        
-        <div className="w-full lg:w-[50vw] flex flex-col items-center lg:items-start justify-center text-center lg:text-left">
-          <div className='transform hover:translate-x-2 transition-transform duration-300'>
-            <h1 className='text-4xl sm:text-5xl lg:text-6xl font-black mb-6 text-[#000000] relative'>
-              Technologies
-              <div className='absolute -bottom-2 left-0 w-1/2 h-1 bg-gradient-to-r from-[#000000] to-[#B6B09F] rounded-full'></div>
-            </h1>
-            <div className='bg-[#000000] p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 max-w-prose'>
-              <p className="text-lg sm:text-xl leading-relaxed text-[#F2F2F2] font-medium mb-6">
-                Smart. Scalable. Secure. Labour Link connects laborers and employers through a robust microservice-powered platform
-              </p>
-              
-              {/* Feature highlights */}
-              <div className='grid grid-cols-2 gap-4'>
-                <div className='bg-[#B6B09F] p-4 rounded-xl'>
-                  <h3 className='font-bold text-[#F2F2F2] text-sm mb-1'>ASP.NET Core</h3>
-                  <p className='text-[#F2F2F2] text-xs opacity-90'>Backend logic and APIs</p>
-                </div>
-                <div className='bg-[#EAE4D5] p-4 rounded-xl'>
-                  <h3 className='font-bold text-[#000000] text-sm mb-1'>Microservices</h3>
-                  <p className='text-[#000000] text-xs opacity-70'>Modular, scalable architecture</p>
-                </div>
-                <div className='bg-[#EAE4D5] p-4 rounded-xl'>
-                  <h3 className='font-bold text-[#000000] text-sm mb-1'>RabbitMQ </h3>
-                  <p className='text-[#000000] text-xs opacity-70'>For real-time messaging and decoupled services</p>
-                </div>
-                <div className='bg-[#B6B09F] p-4 rounded-xl'>
-                  <h3 className='font-bold text-[#F2F2F2] text-sm mb-1'>Docker </h3>
-                  <p className='text-[#F2F2F2] text-xs opacity-90'> Containerized deployment</p>
-                </div>
-                   <div className='bg-[#B6B09F] p-4 rounded-xl'>
-                  <h3 className='font-bold text-[#F2F2F2] text-sm mb-1'>Azure</h3>
-                  <p className='text-[#F2F2F2] text-xs opacity-90'>Secure, cloud-native infrastructure</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full lg:w-[50vw] flex justify-center items-center">
-          <div className="relative group w-full max-w-lg lg:max-w-none lg:w-[45vw] h-72 sm:h-96 lg:h-[50vh]">
-            {/* Modern layered effect */}
-            <div className='absolute inset-0 bg-gradient-to-br from-[#000000] to-[#B6B09F] rounded-3xl shadow-2xl transform rotate-1 group-hover:rotate-3 transition-transform duration-500'></div>
-            <div className='absolute inset-2 bg-[#EAE4D5] rounded-3xl shadow-xl transform -rotate-2 group-hover:-rotate-4 transition-transform duration-500'></div>
-            <img 
-              src="assets/Lb03.png" 
-              alt="Labour Link Features" 
-              className="relative w-full h-full object-fill rounded-3xl shadow-2xl group-hover:scale-105 transition-transform duration-500 border-4 border-[#F2F2F2]" 
-            />
-            
-            {/* Floating action button */}
-            <div className='absolute bottom-6 right-6 w-16 h-16 bg-[#000000] rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300'>
-              <div className='w-6 h-6 border-2 border-[#F2F2F2] rounded-full flex items-center justify-center'>
-                <div className='w-0 h-0 border-l-[6px] border-l-[#F2F2F2] border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent ml-1'></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+function useInView(threshold = 0.15) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, inView];
 }
 
-export default LabourLink
+const transforms = {
+  up:    (v) => v ? 'translateY(0) translateZ(0)'   : 'translateY(60px) translateZ(0)',
+  left:  (v) => v ? 'translateX(0) translateZ(0)'   : 'translateX(-60px) translateZ(0)',
+  right: (v) => v ? 'translateX(0) translateZ(0)'   : 'translateX(60px) translateZ(0)',
+  scale: (v) => v ? 'scale(1) translateZ(0)'        : 'scale(0.88) translateZ(0)',
+};
+
+function Section({ children, className = '', delay = 0, dir = 'up' }) {
+  const [ref, inView] = useInView();
+  return (
+    <div ref={ref} className={className} style={{
+      opacity:    inView ? 1 : 0,
+      transform:  transforms[dir](inView),
+      transition: `opacity 0.9s var(--ease-out-expo) ${delay}s, transform 0.9s var(--ease-out-expo) ${delay}s`,
+      willChange: 'opacity, transform',
+    }}>
+      {children}
+    </div>
+  );
+}
+
+const techs = [
+  { name: 'ASP.NET Core',  desc: 'Backend APIs'           },
+  { name: 'Microservices', desc: 'Scalable architecture'  },
+  { name: 'RabbitMQ',      desc: 'Real-time messaging'    },
+  { name: 'Docker',        desc: 'Containerized deployment'},
+  { name: 'Azure',         desc: 'Cloud infrastructure'   },
+  { name: 'React',         desc: 'Frontend UI'            },
+];
+
+const imgHover = {
+  enter: (e) => { e.currentTarget.style.transform = 'scale(1.025) translateZ(0)'; },
+  leave: (e) => { e.currentTarget.style.transform = 'scale(1) translateZ(0)'; },
+};
+
+export default function LabourLink() {
+  return (
+    <div className="min-h-screen relative overflow-hidden" style={{ background: '#0a0a0a' }}>
+      <div className="absolute top-0 left-0 w-full h-px"
+        style={{ background: 'linear-gradient(to right, transparent, rgba(182,176,159,0.3), transparent)' }} />
+      <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full blur-3xl opacity-5 animate-float"
+        style={{ background: 'radial-gradient(circle, #B6B09F, transparent)', willChange: 'transform' }} />
+      <div className="absolute bottom-1/4 left-0 w-80 h-80 rounded-full blur-3xl opacity-5 animate-float-slow"
+        style={{ background: 'radial-gradient(circle, #EAE4D5, transparent)', willChange: 'transform' }} />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24">
+
+        {/* Hero */}
+        <Section className="grid lg:grid-cols-2 gap-16 items-center mb-32" dir="up">
+          <div className="space-y-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-widest uppercase"
+              style={{ background: 'rgba(182,176,159,0.1)', border: '1px solid rgba(182,176,159,0.2)', color: '#B6B09F' }}>
+              Project 01
+            </div>
+            <h1 className="text-6xl lg:text-8xl font-black leading-none">
+              <span className="text-gradient">Labour</span><br />
+              <span style={{ color: 'rgba(255,255,255,0.9)' }}>Link</span>
+            </h1>
+            <p className="text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              Connecting talent with opportunity in the modern workforce through intelligent matching and seamless communication.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {['Smart Matching', 'Verified Profiles', 'Secure Platform'].map((tag) => (
+                <span key={tag} className="px-4 py-2 text-sm rounded-full glass" style={{ color: 'rgba(255,255,255,0.6)' }}>{tag}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative group">
+            <div className="absolute -inset-1 rounded-3xl blur-xl opacity-20 group-hover:opacity-40"
+              style={{ background: 'linear-gradient(135deg, #B6B09F, #EAE4D5)', transition: 'opacity 0.6s var(--ease-smooth)' }} />
+            <img src="assets/Lb01.png" alt="Labour Link"
+              className="relative w-full h-80 lg:h-[28rem] object-cover rounded-3xl"
+              style={{ border: '1px solid rgba(255,255,255,0.08)', transition: 'transform 0.6s var(--ease-spring)', willChange: 'transform' }}
+              onMouseEnter={imgHover.enter} onMouseLeave={imgHover.leave} />
+          </div>
+        </Section>
+
+        {/* About */}
+        <Section className="grid lg:grid-cols-2 gap-16 items-center mb-32" delay={0.1} dir="up">
+          <div className="relative group order-2 lg:order-1">
+            <div className="absolute -inset-1 rounded-3xl blur-xl opacity-15 group-hover:opacity-30"
+              style={{ background: 'linear-gradient(135deg, #EAE4D5, #B6B09F)', transition: 'opacity 0.6s var(--ease-smooth)' }} />
+            <img src="assets/Lb02.png" alt="About Labour Link"
+              className="relative w-full h-72 lg:h-[24rem] object-cover rounded-3xl"
+              style={{ border: '1px solid rgba(255,255,255,0.08)', transition: 'transform 0.6s var(--ease-spring)', willChange: 'transform' }}
+              onMouseEnter={imgHover.enter} onMouseLeave={imgHover.leave} />
+          </div>
+
+          <div className="space-y-6 order-1 lg:order-2">
+            <h2 className="text-4xl lg:text-5xl font-black" style={{ color: 'rgba(255,255,255,0.9)' }}>
+              About the <span className="text-gradient">Platform</span>
+            </h2>
+            <p className="text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              Labour Link revolutionizes workforce connections through intelligent matching and seamless communication. We bridge the gap between skilled professionals and forward-thinking employers.
+            </p>
+            <div className="p-6 rounded-2xl glass" style={{ borderLeft: '3px solid #B6B09F' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                Built with a focus on reliability, security, and user experience — making job discovery effortless for both workers and employers.
+              </p>
+            </div>
+          </div>
+        </Section>
+
+        {/* Technologies */}
+        <Section delay={0.1} dir="scale">
+          <div className="text-center mb-12">
+            <p className="text-sm font-medium tracking-[0.3em] uppercase mb-3" style={{ color: '#B6B09F' }}>Stack</p>
+            <h2 className="text-4xl font-black" style={{ color: 'rgba(255,255,255,0.9)' }}>Technologies Used</h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-20">
+            {techs.map(({ name, desc }) => (
+              <div key={name} className="group p-5 rounded-2xl glass"
+                style={{ transition: 'transform 0.5s var(--ease-spring), box-shadow 0.5s var(--ease-smooth)', willChange: 'transform' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px) scale(1.02) translateZ(0)'; e.currentTarget.style.boxShadow = '0 24px 48px rgba(0,0,0,0.4), 0 0 30px rgba(182,176,159,0.08)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1) translateZ(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
+                <div className="text-sm font-semibold mb-1 group-hover:text-white"
+                  style={{ color: 'rgba(255,255,255,0.7)', transition: 'color 0.35s var(--ease-smooth)' }}>{name}</div>
+                <div className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>{desc}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative group">
+            <div className="absolute -inset-1 rounded-3xl blur-xl opacity-15 group-hover:opacity-30"
+              style={{ background: 'linear-gradient(135deg, #B6B09F, #EAE4D5)', transition: 'opacity 0.6s var(--ease-smooth)' }} />
+            <img src="assets/Lb03.png" alt="Labour Link Features"
+              className="relative w-full h-72 lg:h-[32rem] object-cover rounded-3xl"
+              style={{ border: '1px solid rgba(255,255,255,0.08)', transition: 'transform 0.6s var(--ease-spring)', willChange: 'transform' }}
+              onMouseEnter={imgHover.enter} onMouseLeave={imgHover.leave} />
+            <div className="absolute inset-0 rounded-3xl pointer-events-none"
+              style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.6), transparent 50%)' }} />
+            <div className="absolute bottom-8 left-8">
+              <div className="text-2xl font-black mb-1" style={{ color: 'rgba(255,255,255,0.9)' }}>Labour Link</div>
+              <div className="text-sm" style={{ color: '#B6B09F' }}>Full-stack workforce platform</div>
+            </div>
+          </div>
+        </Section>
+      </div>
+    </div>
+  );
+}
